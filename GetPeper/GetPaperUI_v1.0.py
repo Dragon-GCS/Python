@@ -170,7 +170,7 @@ class Application:
         count = 1
         info = ''
         for doi in self.doi_list:
-            url = 'https://sci-hub/tw/' + doi
+            url = 'https://www.sci-hub.tw/' + doi
 
             try:
                 req = ur.Request(url, headers=self.db.header)
