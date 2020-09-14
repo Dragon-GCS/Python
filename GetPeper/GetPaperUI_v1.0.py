@@ -164,31 +164,33 @@ class Application:
 
         new = tk.Toplevel()
         win = tk.Text(new)
-        win.insert('end', '正在使用sci-hub.tw下载原文.\n下载速度取决于网络质量，耗时较长\n可使用保存功能手动下载所需文献')
         win.pack()
+        win.insert('end', '正在使用sci-hub.tw下载原文.\n下载速度取决于网络质量，耗时较长\n可使用保存功能手动下载所需文献\n')
+        win.update()
 
         count = 1
         info = ''
         for doi in self.doi_list:
-            url = 'https://www.sci-hub.tw/' + doi
-
+            win.insert('end', '\n正在下载第%s篇' % count)
+            win.update()
+            url = 'https://sci-hub.tw/' + doi
             try:
                 req = ur.Request(url, headers=self.db.header)
-                html = ur.urlopen(req).read()
+                html = ur.urlopen(req, timeout=20).read()
                 bs = BeautifulSoup(html, 'lxml')
                 pdf_link = bs.iframe['src']
-
-                req = ur.Request('https:' + pdf_link, headers=self.db.header)
-                response = ur.urlopen(req).read()
+                if 'https' not in pdf_link:
+                    pdf_link = 'https:' + pdf_link
+                req = ur.Request(pdf_link, headers=self.db.header)
+                response = ur.urlopen(req, timeout=20).read()
                 with open(str(count) + '.pdf', 'wb') as f:
                     f.write(response.read())
-                info = '第%s篇下载完成' % count
-            except Exception:
-                info = 'No.%s paper Dowload failed, failed doi is "%s"' % (count, doi)
-
-        win.insert('end', info)
-        win.update()
-        count += 1
+                info = '\n第%s篇下载完成' % count
+            except Exception as e:
+                info = '\nNo.%s paper Dowload failed, failed doi is "%s"' % (count, doi)
+            win.insert('end', info)
+            win.update()
+            count += 1
 
     def file_save(self):
         file_name = filedialog.asksaveasfilename(defaultextension='.xslx', filetypes=[('xlsx', '.xlsx')])
@@ -217,7 +219,7 @@ class Application:
             item_text = self.excel.item(item, "values")
             text = tk.Text(new, font=self.ft)
             content = 'Title:\n' + item_text[0] + '\n\nPublication\n' + item_text[2] + '\n' + item_text[3] + \
-                      '\n\nWeb_Address\n' + item_text[6] + '\n\nAbstract:\n' + item_text[4]
+                      '\n\nDOI\n' + item_text[5] + '\n\nWeb_Address\n' + item_text[6] + '\n\nAbstract:\n' + item_text[4]
             text.insert(index='insert', chars=content)
             text.grid()
 
