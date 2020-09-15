@@ -67,7 +67,7 @@ class Application:
 
         # 第三行
         tk.Label(self.root, text='共查找到：', font=self.ft).grid(row=3, column=1, sticky='e')
-        tk.Label(self.root, text='', width=1, font=self.ft).grid(row=3, column=2, sticky='ew')
+        tk.Label(self.root, text='', font=self.ft).grid(row=3, column=2, sticky='ew')
         tk.Label(self.root, text='篇文献', font=self.ft).grid(row=3, column=3, sticky='w')
         tk.Label(self.root, text='请输入需要获取的文献数量：', font=self.ft).grid(row=3, column=7, sticky='e')
         # 输入文献数量
@@ -118,7 +118,7 @@ class Application:
         elif self.datebase.get() == 'ACS':
             self.db = ACS.GetFromACS()
         self.db.keyword = self.keywd.get()
-        tk.Label(self.root, text=self.db.get_paper_max_num(), width=1, font=self.ft).grid(row=3, column=2, sticky='ew')
+        tk.Label(self.root, text=self.db.get_paper_max_num(), font=self.ft).grid(row=3, column=2, sticky='ew')
 
     def get_them(self):
         if self.datebase.get() == 'PubMed':
@@ -138,7 +138,7 @@ class Application:
                 win.insert('end', '正在获取第%i篇,共计%s篇\n' % (self.db.count, len(self.db.pmid_addr)))
                 win.update()
                 self.db.get_content(pmid)
-            win.insert('end', '获取完成')
+            win.insert('end', '获取完成，请关闭此窗口。')
             win.update()
         elif self.datebase.get() == 'ACS':
             self.db.main(self.num.get())
@@ -171,7 +171,7 @@ class Application:
         count = 1
         info = ''
         for doi in self.doi_list:
-            win.insert('end', '\n正在下载第%s篇' % count)
+            win.insert('end', '\n正在下载第%s篇\t' % count)
             win.update()
             url = 'https://sci-hub.tw/' + doi
             try:
@@ -182,15 +182,18 @@ class Application:
                 if 'https' not in pdf_link:
                     pdf_link = 'https:' + pdf_link
                 req = ur.Request(pdf_link, headers=self.db.header)
-                response = ur.urlopen(req, timeout=20).read()
+                response = ur.urlopen(req, timeout=20)
                 with open(str(count) + '.pdf', 'wb') as f:
                     f.write(response.read())
-                info = '\n第%s篇下载完成' % count
+                info = '第%s篇下载完成' % count
             except Exception as e:
-                info = '\nNo.%s paper Dowload failed, failed doi is "%s"' % (count, doi)
+                print(e)
+                info = 'No.%s paper Dowload failed, failed doi is "%s"' % (count, doi)
             win.insert('end', info)
             win.update()
             count += 1
+        win.insert('end', '\n下载完成，请关闭此窗口。')
+        win.update()
 
     def file_save(self):
         file_name = filedialog.asksaveasfilename(defaultextension='.xslx', filetypes=[('xlsx', '.xlsx')])
@@ -224,7 +227,7 @@ class Application:
             text.grid()
 
     def search_tip(self, event):
-        tk.Label(self.root, text='Searching', width=1, font=self.ft).grid(row=3, column=2, sticky='ew')
+        tk.Label(self.root, text='Searching', font=self.ft).grid(row=3, column=2, sticky='ew')
 
 
 if __name__ == '__main__':
