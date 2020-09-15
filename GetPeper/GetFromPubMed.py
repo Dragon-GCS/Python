@@ -63,7 +63,6 @@ class GetFromPubmed:
             self.pmid_addr.append(self.base_url + pmid.string)
         if len(self.pmid_addr) > self.paper_number:
             self.pmid_addr = self.pmid_addr[:self.paper_number]
-            print('获取PMID%s个' % len(self.pmid_addr))
 
     def get_content(self, pmid):
         try:
