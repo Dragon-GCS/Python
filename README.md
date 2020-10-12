@@ -1,2 +1,2 @@
-# Public
+# Python
 Python Repository
