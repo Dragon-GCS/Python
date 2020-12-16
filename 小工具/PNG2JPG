@@ -1,0 +1,28 @@
+import os
+from PIL import Image
+
+print('\n=====================可将png转化为jpg格式，节省存储空间=====================\n')
+
+def find_png_file(path):
+    for root,dir,files in os.walk(path):
+        print('当前目录：'+root)
+        for file in files:
+            filename = root+'\\'+file
+            reformat(filename)
+
+
+def reformat(filename):
+    if filename[-4:] == '.png':
+        print('已修改图片：'+filename)
+        img = Image.open(filename)
+
+        if img.mode != 'RGB':
+            img = img.convert('RGB')
+
+        img.save(filename[:-4]+'.jpg')
+        os.remove(filename)
+	
+for i in input('请输入图片所在的文件夹路径，多个文件夹以“+”隔开：\n').split('+'):
+    find_png_file(i)
+
+input('修改完成，按任意键退出。')
