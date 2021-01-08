@@ -3,7 +3,12 @@
 
 * Cell_IO.py
 
-    细胞库管理程序，用于细胞出入库和库存查询
+    细胞库管理程序，用于细胞出入库和库存查询。
+    
+    cell_info.json为python字典保存的json文件。
+    
+        key: str ,保存位置  例A1-1-5
+        value: list,[cell_name, other_infomations]
   
 * PNG2JPG
 
