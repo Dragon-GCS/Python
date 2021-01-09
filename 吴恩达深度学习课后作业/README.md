@@ -18,4 +18,4 @@
 
 3. TensorFlow入门
 
-   CSDN版本的作业为TF1.0版本，自己是用的TF2.0的API
+   这个作业CSDN版本用的是TF1.0API，自己是用的TF2.0的API
