@@ -19,3 +19,17 @@
 3. TensorFlow入门
 
    这个作业CSDN版本用的是TF1.0API，自己是用的TF2.0的API
+
+## 第四周 [卷积神经网](https://github.com/Dragon-GCS/Python/tree/master/%E5%90%B4%E6%81%A9%E8%BE%BE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%AF%BE%E5%90%8E%E4%BD%9C%E4%B8%9A/%E7%AC%AC%E5%9B%9B%E5%91%A8)
+
+1. 搭建卷积神经网络
+
+2. keras入门与搭建残差网络
+
+   博客里使用的keras，我在写作业的时候均使用tf.keras代替
+   
+3. 车辆识别
+
+   由于博客中还是使用的tf构建静态图的方法，这里我用tf2的动态图写的，同时修改了yolo_utils里的部分代码。
+   Yolo文件夹太大，内容请到网盘自取[提取码：sg4u](链接：https://pan.baidu.com/s/1Sf5pQQGeGyZbmunSxDH5gA ),其中权重文件和cfg文件过大，可以去[这里](https://cloud.tencent.com/developer/article/1436586)下载。
+   最后的测试部分由于我的显卡不太给力，连续识别19张图显存就不够了，有能力自己改一下批量绘图的部分。
