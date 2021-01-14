@@ -126,11 +126,13 @@ def yolo_eval(yolo_output, image_shape=(720.,1280.),
 
     return scores, boxes, classes
 
-def predict(image_file, is_show_info=True, is_plot=True):
+def predict(model, image_file, is_show_info=True, is_plot=True):
     """
     运行model并输出预测的图和信息
     由于练习的使用的时tf2.3版本，代码和博客中的tf1有很大区别，所以和部分想了半天，也算是从头梳理了一遍
+    注意：博客中没有model这个参数，这里加上是因为模型在函数里加载的话，运行批量绘图时会由于多次加载模型导致显存报错。
     Args:
+        model: 用来预测锚框的模型
         image_file: images文件夹的图片名称
     Returns:
         out_scores: tensor，维度为（None，）锚框预测的可能值
@@ -141,12 +143,11 @@ def predict(image_file, is_show_info=True, is_plot=True):
     class_name = yolo_utils.read_classes(dir+'coco_classes.txt')
     anchors = yolo_utils.read_anchors(dir+'yolo_anchors.txt')
     image_shape = (720., 1280.)
-    yolo_model = keras.models.load_model(dir+'yolo.h5')
+    
     # 处理图像，image_data为图像转换为tensor后的数据
     image, image_data = yolo_utils.preprocess_image('./data/Yolo/images/'+image_file,model_image_size=(608,608))
     # 预测图像，结果为（1，19，19，425）最后的维度为5个锚框x85个属性
-    #yolo_model_output = yolo_model.predict(image_data)
-    yolo_model_output = yolo_model(image_data)
+    yolo_model_output = model.predict(image_data)
 
     # yolo_head将yolo模型的输出进行转换为各个格子中每个锚框的 （坐标、宽高、预测值、分类值）
     # 原文中yolo_head的输出顺序有误，会导致yolo_eval函数报错，在此已经将yolo_head的输出顺序修改
@@ -170,18 +171,17 @@ def predict(image_file, is_show_info=True, is_plot=True):
 
     return scores, boxes, classes
 
-def pilianghuitu():
+def pilianghuitu(model):
     """
     哈哈哈，用tf2写tf1太难了，终于弄完了，累了，这里就名字就随便起起了
     """
     for i in range(76,121):
         filename = str(i).zfill(4) + '.jpg'
         print("当前文件：" + str(filename))
-        predict(filename)
+        predict(model, filename)
 
 
 if __name__ == '__main__':
-    # 显卡型号1660s，有钱人可以不用管这些注释。。。
-    # 使用GPU预测到第20张的时候总是报错，资源不足，OMM什么的，好像是显存问题，暂时不知道怎么解决，只能19张19张的来
-    with tf.device('/cpu:0'): # 用cpu预测会预测到100张再报资源不足
-        pilianghuitu()
+    # 这里把加载模型这一步写在函数外面了，如果卸载predict函数里面，在运行批量绘图的时候会提示显存空间不足
+    yolo_model = keras.models.load_model('./data/Yolo/yolo_model/model_data/yolo.h5')
+    pilianghuitu(yolo_model)
