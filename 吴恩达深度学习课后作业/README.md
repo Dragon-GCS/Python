@@ -33,3 +33,4 @@
    由于博客中还是使用的tf构建静态图的方法，这里我用tf2的动态图写的，同时修改了yolo_utils里的部分代码。
    Yolo文件夹太大，内容请到网盘自取[提取码：sg4u](链接：https://pan.baidu.com/s/1Sf5pQQGeGyZbmunSxDH5gA ),其中权重文件和cfg文件过大，可以去[这里](https://cloud.tencent.com/developer/article/1436586)下载。
    最后的测试部分由于我的显卡不太给力，连续识别19张图显存就不够了，有能力自己改一下批量绘图的部分。
+   补：显存报错的原因找到了：由于代码里的predict函数每次运行都要load_model()，只要把模型在函数外加载完在传给函数就可以了。
