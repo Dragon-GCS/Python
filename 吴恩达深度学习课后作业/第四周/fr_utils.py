@@ -142,6 +142,7 @@ def load_weights():
     return weights_dict
 
 
+## 下面是面部识别模型的构建
 def inception_block_1a(X):
     """
     Implementation of an inception block
@@ -179,7 +180,6 @@ def inception_block_1a(X):
     return inception
 
 
-## 下面是面部识别模型的构建
 def inception_block_1b(X):
     X_3x3 = Conv2D(96, (1, 1), data_format='channels_first', name='inception_3b_3x3_conv1')(X)
     X_3x3 = BatchNormalization(axis=1, epsilon=0.00001, name='inception_3b_3x3_bn1')(X_3x3)
