@@ -34,3 +34,9 @@
    Yolo文件夹太大，内容请到网盘自取[提取码：sg4u](链接：https://pan.baidu.com/s/1Sf5pQQGeGyZbmunSxDH5gA ),其中权重文件和cfg文件过大，可以去[这里](https://cloud.tencent.com/developer/article/1436586)下载。
    最后的测试部分由于我的显卡不太给力，连续识别19张图显存就不够了，有能力自己改一下批量绘图的部分。
    补：显存报错的原因找到了：由于代码里的predict函数每次运行都要load_model()，只要把模型在函数外加载完在传给函数就可以了。
+   
+4. 人脸识别与神经网络风格迁移
+
+   * 人脸识别中的权重数据需要将data/face_recognize/中的weight解压使用
+
+   * 神经网络风格迁移预训练的模型过大，请在网盘下载[提取码jou1 ]](https://pan.baidu.com/s/1NKt3BYvzUHeWIGA5xPnKJQ )。这一部分在tf2中没找到对应的接口，所以使用的是tf.compat.v1调用的tf1.0的api
