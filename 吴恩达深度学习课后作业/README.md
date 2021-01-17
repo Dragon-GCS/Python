@@ -39,4 +39,4 @@
 
    * 人脸识别中的权重数据需要将data/face_recognize/中的weight解压使用
 
-   * 神经网络风格迁移预训练的模型过大，请在网盘下载[提取码jou1 ]](https://pan.baidu.com/s/1NKt3BYvzUHeWIGA5xPnKJQ )。这一部分在tf2中没找到对应的接口，所以使用的是tf.compat.v1调用的tf1.0的api
+   * 神经网络风格迁移预训练的模型过大，请在网盘下载[提取码jou1](https://pan.baidu.com/s/1NKt3BYvzUHeWIGA5xPnKJQ )。这一部分在tf2中没找到对应的接口，所以使用的是tf.compat.v1调用的tf1.0的api
