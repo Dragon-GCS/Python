@@ -36,6 +36,8 @@
    补：显存报错的原因找到了：由于代码里的predict函数每次运行都要load_model()，只要把模型在函数外加载完在传给函数就可以了。
    
 4. 人脸识别与神经网络风格迁移
+   
+   *  博客中神经网络风格迁移这一部分代码补全，可以参考这篇[博客](https://blog.csdn.net/little_orange__/article/details/106366235)
 
    * 人脸识别中的权重数据需要将data/face_recognize/中的weight解压使用
 
