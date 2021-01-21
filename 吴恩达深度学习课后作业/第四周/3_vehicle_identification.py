@@ -173,7 +173,7 @@ def predict(model, image_file, is_show_info=True, is_plot=True):
 
 def pilianghuitu(model):
     """
-    哈哈哈，用tf2写tf1太难了，终于弄完了，累了，这里就名字就随便起起了
+    终于弄完了，累了，这里就名字就随便起起了
     """
     for i in range(76,121):
         filename = str(i).zfill(4) + '.jpg'
